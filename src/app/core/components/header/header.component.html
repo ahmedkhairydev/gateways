@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-xl navbar-light bg-white justify-content-between justify-content-xl-start py-0">
+    <div class="sidebar-logo d-flex justify-content-start">
+        <a class="w-100 d-flex justify-content-center align-items-center" [routerLink]="[ '/' ]">
+            <img src="assets/images/logo/logo.svg" alt="Logo Icon">
+        </a>
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" (click)="collaped = !collaped" class="d-block d-xl-none" fill="none" width="40" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+
+    <div class="navbar-start d-flex flex-column flex-xl-row justify-content-xl-between text-black" [ngClass]="{'show': collaped}">
+        <div class="nav-wrapper d-flex align-items-center w-100">
+            <mat-list class="navbar-nav d-flex align-items-center p-0" role="list">
+                <mat-list-item class="nav-item px-3 bg-page d-xl-none" role="listitem">
+                    <a class="w-100 d-flex align-items-center" [routerLink]="[ '/' ]">
+                        <img src="assets/images/logo/logo.svg" alt="Logo Icon">
+                    </a>
+                </mat-list-item>
+
+                <mat-list-item class="nav-item px-3" role="listitem" routerLinkActive="active">
+                    <a class="nav-link py-3 px-lg-0 font-15" [routerLink]="[ '/' ]">{{ 'Home' }}</a>
+                </mat-list-item>
+            </mat-list>
+        </div>
+    </div>
+</nav>

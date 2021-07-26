@@ -1,0 +1,54 @@
+@import "style";
+
+.collapse-wrapper {
+    padding: 8px 16px;
+    background-color: $white;
+    box-shadow: 2px 2px 4px 0 rgba(142, 154, 160, 0.1);
+
+  .collapse-conetnt {
+    z-index: 5;
+
+    span {
+      line-height: 2;
+    }
+
+    svg {
+      transition: all 0.5s ease;
+      transform: rotate(0deg);
+      color: $primary;
+
+      &.animate {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .collapse-separetor {
+    background-color: #dde0e2;
+    opacity: 0;
+    height: 0;
+    transition: all 1s ease;
+    animation-delay: .250s;
+
+    &.active {
+      opacity: 1;
+      height: 1px;
+      transition: all .5s ease;
+      color: $primary !important;
+    }
+  }
+
+  .contentCollapsed {
+    height: 0;
+    opacity: 0;
+    transition: all 0.5s ease;
+
+    &.showContent {
+      margin: 1rem 0;
+    }
+  }
+}
+
+.active {
+  color: $primary !important;
+}

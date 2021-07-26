@@ -1,0 +1,61 @@
+<div class="row">
+    <div class="col-sm-6 d-flex flex-column">
+        <label for="serialNumber" class="text-middle font-14 mb-1 text-capitalize">{{ 'Serial Number' }}</label>
+
+        <span id="serialNumber" class="text-black font-14 m-0">{{ gateway.serialNumber }}</span>
+    </div>
+
+    <div class="col-sm-6 d-flex flex-column mt-3 mt-sm-0">
+        <label for="gatewayName" class="text-middle font-14 mb-1 text-capitalize">{{ 'Gateway Name' }}</label>
+
+        <span id="gatewayName" class="text-black font-14 m-0">{{ gateway.gatewayName }}</span>
+    </div>
+
+    <div class="col-sm-6 d-flex flex-column mt-3">
+        <label for="IP" class="text-middle font-14 mb-1 text-capitalize">{{ 'IPv4 Address' }}</label>
+
+        <span id="IP" class="text-black font-14 m-0">{{ gateway.ip }}</span>
+    </div>
+
+    <div class="col-sm-6 d-flex flex-column mt-3">
+        <label for="devices" class="text-middle font-14 m-0 text-capitalize">{{ 'Gateway Devices' }}</label>
+
+        <span id="devices" class="text-black font-14 m-0">{{ gateway.devices.length }} {{ gateway.devices.length > 1 ? 'Devices' : 'Device' }}</span>
+    </div>
+
+    <div class="col-12 mt-3">
+        <div class="d-flex flex-column">
+            <label for="devicesDetails" class="text-middle font-14 m-0 text-capitalize">{{ 'Gateway Devices Details' }}</label>
+
+            <div class="devices-details mt-2" id="devicesDetails">
+                <div class="device py-3 px-4 bg-page" [ngClass]="{'mt-3': i > 0}" *ngFor="let device of gateway.devices; let i=index">
+                    <div class="row">
+                        <div class="col-sm-6 d-flex flex-column">
+                            <label for="deviceId" class="text-middle font-14 mb-1 text-capitalize">{{ 'Device ID' }}</label>
+
+                            <span id="deviceId" class="text-black font-14 m-0">{{ device.deviceId }}</span>
+                        </div>
+
+                        <div class="col-sm-6 d-flex flex-column mt-3 mt-sm-0">
+                            <label for="vendor" class="text-middle font-14 mb-1 text-capitalize">{{ 'Vendor' }}</label>
+
+                            <span id="vendor" class="text-black font-14 m-0">{{ device.vendor }}</span>
+                        </div>
+
+                        <div class="col-sm-6 d-flex flex-column mt-3">
+                            <label for="createdDate" class="text-middle font-14 mb-1 text-capitalize">{{ 'Created Date' }}</label>
+
+                            <span id="createdDate" class="text-black font-14 m-0">{{ device.createdDate }}</span>
+                        </div>
+
+                        <div class="col-sm-6 d-flex flex-column mt-3">
+                            <label for="status" class="text-middle font-14 mb-1 text-capitalize">{{ 'Status' }}</label>
+
+                            <span id="status" class="text-black font-14 m-0 text-capitalize">{{ device.status }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

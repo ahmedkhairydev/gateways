@@ -1,0 +1,144 @@
+<div class="page-wrapper h-100 d-flex flex-column">
+    <h1 class="m-0 regular font-weight-bold font-22">
+        {{ type === 'add' ? 'Add' : type === 'edit' ? 'Edit' : 'View' }} Gateway {{ type !== 'add' ? ' - ' + gateway.gatewayName : '' }}
+    </h1>
+
+    <!-- gateway form -->
+    <div class="row h-100 mt-3" *ngIf="gatewayFormGroup && type !== 'view'">
+        <div class="col-lg-8 col-xl-6 d-flex flex-column h-100">
+            <form class="page-wrapper gateway-form h-100 border-radius-6" [formGroup]="gatewayFormGroup" (ngSubmit)="addEditGateway()">
+                <!-- Unique Serial Number -->
+                <div class="form-group bg-white p-3 d-flex flex-column m-0">
+                    <mat-form-field class="text-start transparent">
+                        <mat-label [attr.for]="'serialNumber'" class="text-middle font-16">{{ 'Unique Serial Number' }}</mat-label>
+
+                        <input matInput id="serialNumber" formControlName="serialNumber" type="text">
+
+                        <mat-error *ngIf="gatewayFormGroup.get('serialNumber')?.errors && gatewayFormGroup.get('serialNumber')?.touched">
+                            <span class="font-12">{{ gatewayFormGroup.get('serialNumber')?.errors | validationHandler }}</span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- Gateway Name -->
+                <div class="form-group bg-white p-3 d-flex flex-column m-0 mt-3">
+                    <mat-form-field class="text-start transparent">
+                        <mat-label [attr.for]="'gatewayName'" class="text-middle font-16">{{ 'Gateway Name' }}</mat-label>
+
+                        <input matInput id="gatewayName" formControlName="gatewayName" type="text">
+
+                        <mat-error *ngIf="gatewayFormGroup.get('gatewayName')?.errors && gatewayFormGroup.get('gatewayName')?.touched">
+                            <span class="font-12">{{ gatewayFormGroup.get('gatewayName')?.errors | validationHandler }}</span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                
+                <!-- IPv4 -->
+                <div class="form-group bg-white p-3 d-flex flex-column m-0 mt-3">
+                    <mat-form-field class="text-start transparent">
+                        <mat-label [attr.for]="'ip'" class="text-middle font-16">{{ 'IPv4 Address' }}</mat-label>
+
+                        <input matInput id="ip" formControlName="ip" type="text" pattern="(?:(?:^|\.)(?:2(?:5[0-5]|[0-4]\d)|1?\d?\d)){4}$"
+                            (keydown)="onlyNumber($event)">
+
+                        <mat-error *ngIf="gatewayFormGroup.get('ip')?.errors && gatewayFormGroup.get('ip')?.touched">
+                            <span class="font-12">{{ gatewayFormGroup.get('ip')?.errors | validationHandler }}</span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- devices label -->
+                <div class="d-flex align-items-center w-100">
+                    <label for="devices" class="text-middle font-18 m-0 text-capitalize my-4 w-100">{{ 'Gateway Devices' }}</label>
+
+                    <button class="main-btn has-svg font-14 border p-1 m-inline-start-3" type="button" mat-flat-button [disabled]="gatewayDevices.controls.length > 9"
+                        (click)="initDeviceForm()">
+                        <svg class="cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" width="22" viewBox="0 0 24 24" stroke="#7aca25">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- devices form -->
+                <div class="d-flex align-items-start w-100 devices" [ngClass]="{'mt-3': i > 0}" formArrayName="devices" *ngFor="let device of gatewayDevices.controls; let i=index">
+                    <form class="w-100" [formGroupName]="i">
+                        <app-collapse [title]="'Device ' + (i +1)">
+                            <div class="device">
+                                <!-- deviceId -->
+                                <div class="form-group p-3 pt-0 d-flex flex-column m-0">
+                                    <mat-form-field class="text-start transparent">
+                                        <mat-label [attr.for]="'deviceId'" class="text-middle font-16">{{ 'Unique ID' }}</mat-label>
+
+                                        <input matInput id="deviceId" formControlName="deviceId" [min]="0" type="number">
+
+                                        <mat-error *ngIf="device?.get('deviceId')?.errors && device?.get('deviceId')?.touched">
+                                            <span class="font-12">{{ device?.get('deviceId')?.errors | validationHandler }}</span>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <!-- vendor -->
+                                <div class="form-group p-3 pt-0 d-flex flex-column m-0">
+                                    <mat-form-field class="text-start transparent">
+                                        <mat-label [attr.for]="'vendor'" class="text-middle font-16">{{ 'Vendor' }}</mat-label>
+
+                                        <input matInput id="vendor" formControlName="vendor" type="text">
+
+                                        <mat-error *ngIf="device?.get('vendor')?.errors && device?.get('vendor')?.touched">
+                                            <span class="font-12">{{ device?.get('vendor')?.errors | validationHandler }}</span>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <!-- status -->
+                                <div class="form-group p-3 pt-0 d-flex flex-column m-0">
+                                    <label for="setting-status" class="text-middle mb-2 font-16 font-weight-bold d-flex">{{ 'Status' }}</label>
+            
+                                    <div class="d-flex align-items-center mt-2" id="setting-status">
+                                        <button class="main-btn status bg-white font-14 px-5 py-1 font-weight-bold" type="button" mat-flat-button
+                                            (click)="device?.get('status')?.setValue('online')"
+                                            [ngClass]="{'border-transparent text-success bg-succes': device?.get('status')?.value === 'online',
+                                                        'text-dark strock': device?.get('status')?.value === 'offline'}">
+                                            <p class="m-0">{{ ('Online' ) }}</p>
+                                        </button>
+                                        
+                                        <button class="main-btn strock bg-white status font-14 px-5 py-1 font-weight-bold m-inline-start-2" type="button" mat-flat-button
+                                            (click)="device?.get('status')?.setValue('offline')"
+                                            [ngClass]="{'border-transparent text-error bg-error-light': device?.get('status')?.value === 'offline',
+                                                        'text-dark strock': device?.get('status')?.value === 'online'}">
+                                            <p class="m-0">{{ ('Offline' ) }}</p>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </app-collapse>
+                    </form>
+                    
+                    <a class="border p-1 cursor-pointer m-inline-start-3 z-index" *ngIf="i > 0" (click)="gatewayDevices.removeAt(i)" title="Remove Device">
+                        <svg class="cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="22" fill="none" viewBox="0 0 24 24" stroke="#ff375e">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- actions -->
+                <div class="d-flex justify-content-end align-items-center mt-4">
+                    <button class="main-btn font-14 text-error strock px-4 m-inline-start-3" type="button" mat-flat-button routerLink="/">
+                        {{ 'Cancel' }}
+                    </button>
+
+                    <button class="main-btn main font-14 text-white px-4 m-inline-start-3" type="submit" [disabled]="gatewayFormGroup.invalid" mat-flat-button>
+                        {{ 'Submit' }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- gateway view -->
+    <div class="row page-wrapper" *ngIf="type === 'view' && gateway">
+        <div class="col-lg-8 col-xl-6 d-flex flex-column py-3 bg-white">
+            <app-gateway [gateway]="gateway"></app-gateway>
+        </div>
+    </div>
+</div>

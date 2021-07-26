@@ -1,0 +1,26 @@
+<div class="page-wrapper h-100">
+    <div class="row h-100">
+        <div class="col-lg-8 col-xl-6 d-flex flex-column h-100">
+            <div class="d-flex align-items-center justify-content-between">
+                <h1 class="m-0 regular font-weight-bold font-22">{{ 'List of Gateways' }}</h1>
+
+                <a [routerLink]="[ '/gateway/add' ]" class="border p-1 cursor-pointer" title="Add Gateway">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="22" viewBox="0 0 24 24" stroke="#7aca25">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="page-wrapper gateways mt-3 h-100">
+                <div class="gateway" [ngClass]="{'mt-3': i > 0}" *ngFor="let gateway of gateways; let i=index">
+                    <app-collapse title="Antechamber" [withEdit]="true" [withView]="true"
+                        (edit)="edit(gateway.id)" (view)="view(gateway.id)">
+                        <app-gateway [gateway]="gateway"></app-gateway>
+                    </app-collapse>
+                </div>
+
+                <p class="text-middle m-0" *ngIf="!gateways.length">{{ "There's no gateways, please add yours." }}</p>
+            </div>
+        </div>
+    </div>
+</div>
