@@ -1,5 +1,5 @@
 # Gateways
-Gatwaways is a Task for Musala Soft
+Gateways is a Task for Musala Soft.
 
 ## Gateways - NodeJS Project
 
