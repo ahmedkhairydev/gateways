@@ -62,8 +62,8 @@ export class AddEditViewGatewayComponent implements OnInit {
 
   addEditGateway() {
     this.gatewayFormGroup.value.devices.map((device: any) => device.createdDate = new Date().toLocaleDateString());
-    this.http.post(`Gateway/${this.type === 'edit' ? `Update/${this.gatewayId}` : 'Add'}`, this.gatewayFormGroup.value).subscribe(
-      () => this.router.navigateByUrl('/')
+    this.http.post<any>(`Gateway/${this.type === 'edit' ? `Update/${this.gatewayId}` : 'Add'}`, this.gatewayFormGroup.value).subscribe(
+      (event) => { if (event.status === 200) this.router.navigateByUrl('/') }
     );
   }
 
