@@ -13,7 +13,7 @@
 
             <div class="page-wrapper gateways mt-3 h-100">
                 <div class="gateway" [ngClass]="{'mt-3': i > 0}" *ngFor="let gateway of gateways; let i=index">
-                    <app-collapse title="Antechamber" [withEdit]="true" [withView]="true"
+                    <app-collapse [title]="gateway.gatewayName" [withEdit]="true" [withView]="true"
                         (edit)="edit(gateway.id)" (view)="view(gateway.id)">
                         <app-gateway [gateway]="gateway"></app-gateway>
                     </app-collapse>
