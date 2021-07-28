@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o --port=4900",
-    "build": "ng build --prod",
+    "build": "ng build --prod --base-href https://ahmedkhairydev.github.io/gateways/ ",
+    "deploy": "ng deploy --base-href https://ahmedkhairydev.github.io/gateways/ --repo=https://github.com/ahmedkhairydev/gateways.git --name=Ahmed",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -21,6 +22,7 @@
     "@angular/platform-browser": "~11.2.14",
     "@angular/platform-browser-dynamic": "~11.2.14",
     "@angular/router": "~11.2.14",
+    "angular-cli-ghpages": "^1.0.0-rc.2",
     "bootstrap": "^5.0.2",
     "ngx-toastr": "^14.0.0",
     "rxjs": "~6.6.0",
