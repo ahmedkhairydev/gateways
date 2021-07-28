@@ -1,4 +1,4 @@
 export const environment = {
-  hostAPI: 'http://localhost:3000/',
+  hostAPI: 'https://gateways-api.vercel.app/',
   production: true
 };
